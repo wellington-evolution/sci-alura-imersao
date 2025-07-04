@@ -6,11 +6,11 @@ on:
       pool_id:
         description: 'Workload Identity Pool ID'
         required: true
-        default: 'github-pool'
+        default: 'github-pool-t3'
       provider_id:
         description: 'Workload Identity Provider ID'
         required: true
-        default: 'github-provider'
+        default: 'github-provider-t3'
 
 jobs:
   setup-gcp-identity:
