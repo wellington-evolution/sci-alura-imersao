@@ -31,11 +31,11 @@ jobs:
           REPOSITORY_NAME: ${{ secrets.GCP_REPOSITORY_NAME }}
           IMAGE_NAME: ${{ secrets.GCP_SERVICE_NAME }}
         run: |
-          echo ${{ PROJECT_NUMBER }}
-          echo ${PROJECT_ID}
-          echo $REGION
-          echo "${REPOSITORY_NAME}"
-          echo "{IMAGE_NAME}"
+          echo "$PROJECT_NUMBER"
+          echo "$PROJECT_ID"
+          echo "$REGION"
+          echo "$REPOSITORY_NAME"
+          echo "$IMAGE_NAME"
 
       - name: Checkout repository
         uses: actions/checkout@v4
