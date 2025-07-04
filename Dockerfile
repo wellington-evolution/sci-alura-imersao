@@ -24,9 +24,6 @@ FROM python:3.13-slim-bullseye
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
-# Set environment variables for the application
-ENV PORT=8000
-
 # Create a non-root user for security
 RUN addgroup --system app && adduser --system --ingroup app app
 
