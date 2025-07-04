@@ -1,0 +1,21 @@
+services:
+  api:
+    # Constrói a imagem Docker a partir do Dockerfile no diretório atual.
+    build: .
+
+    # Define um nome para o contêiner para facilitar a referência.
+    container_name: imersao_api
+
+    # Mapeia a porta 8000 da sua máquina (host) para a porta 8000 do contêiner.
+    ports:
+      - "8000:8000"
+
+    # Monta o diretório do projeto local dentro do contêiner.
+    # Isso é essencial para o desenvolvimento, pois permite que o "hot-reload"
+    # do uvicorn detecte alterações no código e reinicie o servidor automaticamente.
+    volumes:
+      - .:/app
+
+    # Sobrescreve o comando padrão (CMD) do Dockerfile.
+    # Inicia o servidor uvicorn com a flag --reload para o modo de desenvolvimento.
+    command: ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]

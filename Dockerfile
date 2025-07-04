@@ -24,6 +24,9 @@ FROM python:3.13-slim-bullseye
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
+# Set environment variables for the application
+ENV PORT=8000
+
 # Create a non-root user for security
 RUN addgroup --system app && adduser --system --ingroup app app
 
@@ -44,7 +47,8 @@ RUN chown -R app:app .
 # Switch to the non-root user
 USER app
 
-EXPOSE 8000
+# Expose the specified port
+EXPOSE $PORT
 
-# Remove the --reload flag for production
-CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000"]
+# Run the application using uvicorn
+CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "${PORT}"]

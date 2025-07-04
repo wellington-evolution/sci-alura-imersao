@@ -8,7 +8,7 @@ Este projeto é uma API desenvolvida com FastAPI para gerenciar alunos, cursos e
 - [Git](https://git-scm.com/downloads)
 - [Docker](https://www.docker.com/get-started/)
 
-## Passos para subir o projeto
+## Passos para subir o projeto (Localmente)
 
 1. **Faça o download do repositório:**
    [Clique aqui para realizar o download](https://github.com/guilhermeonrails/imersao-devops/archive/refs/heads/main.zip)
@@ -51,6 +51,23 @@ Este projeto é uma API desenvolvida com FastAPI para gerenciar alunos, cursos e
 
 ---
 
+## Passos para subir o projeto (Com Docker)
+
+Com o Docker e o Docker Compose instalados, você pode subir a aplicação com um único comando, sem precisar instalar Python ou dependências na sua máquina.
+
+1. **Construa e inicie o contêiner:**
+   Na raiz do projeto, execute:
+   ```sh
+   docker compose up --build
+   ```
+   *O comando `docker compose` (v2) é o padrão atual. Se você usa uma versão mais antiga, pode precisar de `docker-compose` (v1).*
+
+2. **Acesse a documentação interativa:**
+   Abra o navegador e acesse:
+   http://127.0.0.1:8000/docs
+
+---
+
 ## Estrutura do Projeto
 
 - `app.py`: Arquivo principal da aplicação FastAPI.
@@ -59,6 +76,8 @@ Este projeto é uma API desenvolvida com FastAPI para gerenciar alunos, cursos e
 - `database.py`: Configuração do banco de dados SQLite.
 - `routers/`: Diretório com os arquivos de rotas (alunos, cursos, matrículas).
 - `requirements.txt`: Lista de dependências do projeto.
+- `Dockerfile`: Define a imagem Docker para a aplicação.
+- `compose.yaml`: Orquestra a execução da aplicação com Docker Compose.
 
 ---
 
