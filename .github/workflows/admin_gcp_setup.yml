@@ -43,14 +43,13 @@ jobs:
             --location="global" \
             --display-name="GitHub Actions Pool" || echo "Pool may already exist."
 
-          echo "Creating Workload Identity Provider: $PROVIDER_ID"
           gcloud iam workload-identity-pools providers create-oidc "$PROVIDER_ID" \
             --project="$PROJECT_ID" \
             --location="global" \
             --workload-identity-pool="$POOL_ID" \
             --display-name="GitHub Actions Provider" \
-            --attribute-mapping="google.subject=assertion.sub,attribute.repository=assertion.repository,attribute.actor=assertion.actor,attribute.aud=assertion.aud" \
-            --issuer-uri="https://token.actions.githubusercontent.com" || echo "Provider may already exist."
+            --issuer-uri="https://token.actions.githubusercontent.com" \
+            --attribute-mapping="google.subject=assertion.sub,attribute.actor=assertion.actor,attribute.repository=assertion.repository"
 
           echo "Listing pools and providers for verification:"
           gcloud iam workload-identity-pools list --project="$PROJECT_ID" --location="global"
