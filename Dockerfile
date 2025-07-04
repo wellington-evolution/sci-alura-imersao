@@ -45,7 +45,7 @@ RUN chown -R app:app .
 USER app
 
 # Expose the specified port
-EXPOSE $PORT
+EXPOSE 8080
 
 # Run the application using uvicorn
-CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "${PORT}"]
+CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8080"]
