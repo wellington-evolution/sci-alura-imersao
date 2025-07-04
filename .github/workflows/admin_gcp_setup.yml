@@ -1,0 +1,57 @@
+name: Admin GCP Setup
+
+on:
+  workflow_dispatch:
+    inputs:
+      pool_id:
+        description: 'Workload Identity Pool ID'
+        required: true
+        default: 'github-pool'
+      provider_id:
+        description: 'Workload Identity Provider ID'
+        required: true
+        default: 'github-provider'
+
+jobs:
+  setup-gcp-identity:
+    name: Setup Workload Identity Federation
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Authenticate to Google Cloud
+        id: auth
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_ADMIN_SA_KEY }}
+
+      - name: Setup Google Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Create Workload Identity Pool and Provider
+        run: |
+          set -e
+          PROJECT_ID="${{ secrets.GCP_PROJECT_ID }}"
+          POOL_ID="${{ github.event.inputs.pool_id }}"
+          PROVIDER_ID="${{ github.event.inputs.provider_id }}"
+
+          echo "Creating Workload Identity Pool: $POOL_ID"
+          gcloud iam workload-identity-pools create "$POOL_ID" \
+            --project="$PROJECT_ID" \
+            --location="global" \
+            --display-name="GitHub Actions Pool" || echo "Pool may already exist."
+
+          echo "Creating Workload Identity Provider: $PROVIDER_ID"
+          gcloud iam workload-identity-pools providers create-oidc "$PROVIDER_ID" \
+            --project="$PROJECT_ID" \
+            --location="global" \
+            --workload-identity-pool="$POOL_ID" \
+            --display-name="GitHub Actions Provider" \
+            --attribute-mapping="google.subject=assertion.sub,attribute.repository=assertion.repository,attribute.actor=assertion.actor,attribute.aud=assertion.aud" \
+            --issuer-uri="https://token.actions.githubusercontent.com" || echo "Provider may already exist."
+
+          echo "Listing pools and providers for verification:"
+          gcloud iam workload-identity-pools list --project="$PROJECT_ID" --location="global"
+          gcloud iam workload-identity-pools providers list --project="$PROJECT_ID" --location="global" --workload-identity-pool="$POOL_ID"

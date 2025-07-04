@@ -42,6 +42,6 @@ jobs:
           REGION: ${{ secrets.GCP_REGION }}
           REPOSITORY_NAME: ${{ secrets.GCP_REPOSITORY_NAME }}
           IMAGE_NAME: ${{ secrets.GCP_SERVICE_NAME }}
-        run: |-
+        run: |
           chmod +x ./deploy.sh
           ./deploy.sh
