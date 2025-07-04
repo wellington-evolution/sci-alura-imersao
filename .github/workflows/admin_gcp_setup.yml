@@ -50,6 +50,7 @@ jobs:
             --display-name="GitHub Actions Provider" \
             --issuer-uri="https://token.actions.githubusercontent.com" \
             --attribute-mapping="google.subject=assertion.sub,attribute.actor=assertion.actor,attribute.repository=assertion.repository"
+            --attribute-condition='attribute.repository == "wellington-evolution/sci-alura-imersao"'
 
           echo "Listing pools and providers for verification:"
           gcloud iam workload-identity-pools list --project="$PROJECT_ID" --location="global"
