@@ -23,6 +23,20 @@ jobs:
       id-token: 'write'
 
     steps:
+      - name: Check if secrets are being called
+        env:
+          PROJECT_NUMBER: ${{ secrets.GCP_PROJECT_NUMBER }}
+          PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+          REGION: ${{ secrets.GCP_REGION }}
+          REPOSITORY_NAME: ${{ secrets.GCP_REPOSITORY_NAME }}
+          IMAGE_NAME: ${{ secrets.GCP_SERVICE_NAME }}
+        run: |
+          echo ${{ PROJECT_NUMBER }}
+          echo ${PROJECT_ID}
+          echo $REGION
+          echo "${REPOSITORY_NAME}"
+          echo "{IMAGE_NAME}"
+
       - name: Checkout repository
         uses: actions/checkout@v4
 
